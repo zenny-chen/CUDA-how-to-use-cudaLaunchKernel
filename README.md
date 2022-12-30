@@ -7,7 +7,7 @@ The key point is that parameters passing should use their addresses instead of r
 ```cuda
         //addKernel <<< blockSize, maxThreadCount >>> (dev_c, dev_a, dev_b, constValue);
         void* args[]{ &dev_c, &dev_a, &dev_b, &constValue };
-        cudaStatus = cudaLaunchKernel(addKernel, dim3(blockSize, 1U, 1U), dim3(maxThreadCount, 1U, 1U), args, 0U, nullptr);
+        cudaStatus = cudaLaunchKernel((void*)addKernel, dim3(blockSize, 1U, 1U), dim3(maxThreadCount, 1U, 1U), args, 0U, nullptr);
 ```
 
 <br />

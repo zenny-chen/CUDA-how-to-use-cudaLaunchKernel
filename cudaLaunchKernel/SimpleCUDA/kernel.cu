@@ -88,7 +88,8 @@ static void AddWithCUDATest(void)
         
         //addKernel <<< blockSize, maxThreadCount >>> (dev_c, dev_a, dev_b, constValue);
         void* args[]{ &dev_c, &dev_a, &dev_b, &constValue };
-        cudaStatus = cudaLaunchKernel(addKernel, dim3(blockSize, 1U, 1U), dim3(maxThreadCount, 1U, 1U), args, 0U, nullptr);
+        // On Linux, kernel function type should be cast to void*, otherwise the compiler may report errors...
+        cudaStatus = cudaLaunchKernel((void*)addKernel, dim3(blockSize, 1U, 1U), dim3(maxThreadCount, 1U, 1U), args, 0U, nullptr);
 
         if (cudaStatus != cudaSuccess)
         {
